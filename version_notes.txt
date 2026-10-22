@@ -1,0 +1,32 @@
+# CoLab Experiment Template
+Natalia Vélez
+December 2023
+
+Use this space to write a narrative description of your experiment, taking care to include
+information about (1) motivation, (2) DV and IV, and (3) any changes made to the paradigm,
+especially if you pilot multiple versions or are running a multi-experiment study. 
+
+Example: 
+
+> In this game, participants played the role of "aerospace engineers"; their task was to build widgets to 
+measure things in space. On each trial, participants were told the _standard size_ of the widget (based 
+on company protocol), the _ideal size_ (based on local environment conditions), the _number of engineers_
+who had to build connectors for their widget, and the _reception_, or probability of successfully
+transmitting messages to the other engineers.
+
+> Participants' score was computed based on two loss functions. The _environment loss_ function measured
+the distance between the size of the widget participants built and the ideal size. The _social loss_ 
+function measured the distance between the size of the widget participants built and the size of the
+connectors made by engineers. This loss function, in turn, was affected by the number of engineers and
+the reception. When engineers successfully received a message, they built a connector in exactly the right
+size for the participant's widget; otherwise, they built a connector in the standard size. The more
+engineers miss the participant's message, the more steeply participants are penalized for moving away
+from the standard size. 
+
+> In this iteration of the experiment, we manipulated the _ideal size_ and _number of engineers_, while keeping the 
+reception and the standard size fixed. The goal of this particular experiment was to test how
+participants adapt their own behavior by balancing environmental and social costs; this experiment provides
+an empirical test of the model in [Dessein & Prat (2015)](https://www0.gsb.columbia.edu/faculty/wdessein/papers/attentionnetworks15-04-01.pdf).
+
+> NB: A version with [1,2,3,5,10] engineers was piloted in July 2023. A separate version with [1,3,5,10,15]
+engineers was piloted in August 2023. Both used the same experiment code; only scripts/exp-timeline.js (line 302) was edited.
