@@ -30,3 +30,59 @@ an empirical test of the model in [Dessein & Prat (2015)](https://www0.gsb.colum
 
 > NB: A version with [1,2,3,5,10] engineers was piloted in July 2023. A separate version with [1,3,5,10,15]
 engineers was piloted in August 2023. Both used the same experiment code; only scripts/exp-timeline.js (line 302) was edited.
+
+
+## Version 2 — UCSD / Vélez Lab adaptation
+Serena Yang
+September 2026
+
+This version adapts the original CoLab template for general use as a UCSD / Vélez Lab experiment
+template, rather than changing a specific experimental paradigm. The changes below are to shared
+infrastructure — the consent form, the post-experiment survey, and how data gets saved — not to
+the task itself.
+
+Changes:
+
+- Branding: page title changed from "CoLab Research Study" to "Vélez Research Study"; the
+  Princeton logo (images/PU1line.png) was replaced with the UCSD logo (images/ucsd_logo.png).
+
+- Consent form (templates/consent.html): replaced the Princeton-era consent text with UCSD /
+  Vélez Lab consent language (study title, PI, and IRB contact info all updated to UCSD),
+  formatted as an Exempt Information Sheet. Several details are left as [TODO: ...] placeholders
+  (recruitment platform, expected duration, task description bullets, payment/bonus amounts) —
+  these need to be filled in with each study's specifics before data collection.
+
+- Post-experiment survey (templates/survey.html, scripts/plugin-post-survey.js,
+  styles/exp-style.css): expanded from a single-page, 8-question demographic survey into a
+  two-page survey with Next/Back navigation.
+    - Page 1 (demographics): added country of residence (dropdown sourced from the ISO-3166
+      list in all.csv), race/ethnicity (multi-select, with hover examples), and English
+      proficiency. Reworded gender options (Woman / Man / Non-binary / self-describe / prefer
+      not to say) and expanded education into 7 levels with hover examples. Age field now
+      enforces a minimum of 18 and strips non-numeric characters as the participant types.
+    - Page 2 (task experience): added four star/fire-rating questions (video game experience,
+      fun, difficulty, clarity of instructions), a yes/no bug-report question with a
+      conditional "please describe" field, and an open-ended comments box.
+    - Removed the old "did you understand the instructions?" and "how much did you enjoy the
+      HIT?" questions; these are effectively superseded by the new experience-rating questions.
+    - Added a fix that explicitly blocks the survey form's native submit behavior, so a stray
+      submit-type button can no longer reload the page and leak form values into the URL.
+
+- Data storage (saveData.php): replaced MySQL/PDO database writes with local JSON-file storage
+  — each submission is now saved as its own timestamped .json file under a configurable
+  $data_dir, with basic request validation (POST only, 5 MB payload cap, must be valid JSON).
+  As a result, database_config.php is no longer read by any script.
+
+New files:
+- all.csv — ISO-3166 country code/name reference list used to generate the country dropdown in
+  templates/survey.html; not read by any script at runtime.
+- experiment_template-main_MODIF.code-workspace — local VS Code multi-root workspace file for
+  development; not part of the deployed experiment.
+
+Still TODO before running a real study:
+- Set $data_dir in saveData.php to a real, writable path outside the web-accessible application
+  folder (currently a placeholder: /home/YOUR_USER/exp_data/my_experiment).
+- Fill in the [TODO: ...] placeholders in templates/consent.html with this study's specifics.
+- Minor cleanup: a stray character was introduced into a comment in scripts/plugin-consent.js
+  (cosmetic only, doesn't affect functionality); a couple of console.log() debug lines were added
+  to exp-timeline.js and plugin-consent.js and can be removed before data collection.
